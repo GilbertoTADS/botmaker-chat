@@ -2,6 +2,9 @@
 
 COLOCANDO PARA FUNCIONAR:
 
+importante:
+Utilizei o banco de dados ibm db2, substitua este módulo pelo de sua preferência.
+
 baixe todo o conteudo do repositorio
 
 dentro do repósitorio faça:
