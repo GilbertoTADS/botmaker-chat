@@ -3,7 +3,7 @@
         "myPurchases":{
             "introduction":"Para continuar precisamos te identificar. Digite seu CPF completo, apenas números, por favor.",
             "errorCPF":"Não encontramos nenhum cadastro para esse cpf. \n Para tentar de novo digite: *my purchases*, ou digite: *Oi* para voltar ao menu inicial",
-            "identfied":"Parece que encontramos seu cadastro. Esses dados são seus? \n\n - *Nome:* nameUser \n\n - *Endereço:* addressUser \n\n - *dt.Nascimento:* dateOfBirth \n\n*A)SIM*\n*B)NÃO*",
+            "identfied":"Parece que encontramos seu cadastro. Esses dados são seus? \n\n - *Nome:* nameUser \n\n - *Endereço:* addressUser \n\n - *dt.Nascimento:* dateOfBirth \n\n*A)SIM*\n*B)NÃO* \n\n*nota:*caso perceba que seus dados estão desatualizados vá até uma de nossas lojas e solicite sua atualização.",
             "errorIdenfied":"Entendi. Então verifique se digitou o CPF corretamente e digite *my purchases* para tentar de novo.",
             "successIdentified":"nameUser, esse é o total somado das últimas 10 compras do CPF informado: \n\n - *Nº pedido:* requestNumber \n - *Data do pedido:* dataRequest \n - *Valor total:* totalValue. \n\n Deseja ver os detalhes desta compra? \n\n*A)SIM*\n*B)NÃO*",
             "purchaseDetails":"Detalhes: \n\n - *Descrição:* description \n\n - *Valor:* value \n\n - *Data:* DatePurchase ",

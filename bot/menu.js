@@ -5,9 +5,7 @@ module.exports = ( contactId,message, myCache, talk, funcMessage ) => {
     //DESIGN PATTERS: OBJECT LITERALS
 
     const intents = {
-
         "mypurchases" : ( ) => {
-
             runIntent = 'mypurchases'
             myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
             myCache.set( contactId+'action' , contactId , myCache.options.stdTTL )

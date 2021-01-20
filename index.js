@@ -8,7 +8,7 @@ const talk = require('./config/talk.json')
 
 const db = require('./database/connection')()
 
-const { getClientByCPF, getTenPurchasesThisClient } = require('./database/query')()
+const { getClientByCPF, getTenPurchasesThisClient, updateContact } = require('./database/query')()
 
 const menu = require('./bot/menu.js')
 const { introduction, errorCPF, purchaseDetails } = require('./bot/mypurchases')()
@@ -34,7 +34,7 @@ app.post('/',  async ( req, res ) => {
                 break;
 
                 case contactId+'mypurchases-identified':
-                    errorCPF(message, contactId, myCache, getTenPurchasesThisClient, talk,db,funcMessage)
+                    errorCPF(message, contactId, myCache, getTenPurchasesThisClient,getClientByCPF,updateContact, talk,db,funcMessage)
                 break;
 
                 case contactId+'mypurchases-successIdentified':

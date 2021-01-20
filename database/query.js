@@ -4,7 +4,10 @@ let getClientByCPF = async (conn,cpfcnpj) => {
                         cf.NOME,
                         cf.ENDERECO,
                         cf.CNPJCPF,
-                        cf.NUMERO, 
+                        cf.NUMERO,
+                        cf.FONE1,
+                        cf.FONE2,
+                        cf.FONECELULAR, 
                         ci.DESCRCIDADE,
                         ca.DATANASCIMENTO 
                     FROM 
@@ -26,7 +29,6 @@ let getClientByCPF = async (conn,cpfcnpj) => {
 
 
 let getTenPurchasesThisClient = async (conn,cpfcnpj) => {
-    console.log('CPF: ->',cpfcnpj)
 
     let strQuery = `SELECT
                         LOWER(o.NOME) AS NOME, 
@@ -56,11 +58,37 @@ let getTenPurchasesThisClient = async (conn,cpfcnpj) => {
     return data
 
 }
+let updateContact = (conn, client, contactId) => {
+    console.log('ATUALIZANDO...')
+    console.log(client)
+     for(idx in client[0]){
+
+        if(idx == 'FONE1' || idx == 'FONE2' || idx == 'FONECELULAR'){
+            console.log('index: '+idx)
+            console.log('encontrei campos de contato')
+            console.log(client[0][idx])
+            strUpdate = `UPDATE 
+                            CLIENTE_FORNECEDOR 
+                        SET
+                            ${idx} = '${contactId}'
+                        WHERE
+                            CNPJCPF = '${client[0]['CNPJCPF']}'`
+
+            switch(client[0][idx]){
+                case null:
+                    console.log('campo vazio sendo atualizado')
+                    return conn.then(async(db) => {return await db.query(strUpdate)})
+            }
+        }
+     }
+
+}
 
     
 
 module.exports = ()=>{
 
-    return { getClientByCPF, getTenPurchasesThisClient }
+
+    return { getClientByCPF, getTenPurchasesThisClient, updateContact }
 
 }

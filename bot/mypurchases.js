@@ -41,11 +41,18 @@ const introduction = async (message, getClientByCPF, myCache, funcMessage, db,co
 
 }
 
-const errorCPF = async (message, contactId, myCache, getTenPurchasesThisClient, talk, db,funcMessage) => {
+const errorCPF = async (message, contactId, myCache, getTenPurchasesThisClient,getClientByCPF, updateContact, talk, db,funcMessage) => {
     
     if(message == 'a' || message == 'sim'){
         
         let cnpjcpf = myCache.get( contactId+'data-cpf').toString()
+
+        getClientByCPF(db, cnpjcpf)
+            .then( client => {
+                updateContact(db,client, contactId)
+            })
+            .catch( error => console.log(error))
+
 
         let data = await getTenPurchasesThisClient(db, cnpjcpf)
 
