@@ -1,9 +1,19 @@
-const removeCharacterSpecial = (value) => {
+//const utf8 = require('utf8')
+const { Buffer } = require('buffer');
+const { StringDecoder } = require('string_decoder');
+const decoder = new StringDecoder('utf8');
+
+
+const convertUTF8 = (value) =>{
 	value = value.toString()
-	value = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\-]+/g, '-');
-	//value = value.replace(/[^a-zA-Zs]/g, "")
-	return value
+	const str = Buffer.from(value)
+		y
+	console.log(decoder.end(str))
+	return str
+	
 }
+
+
 module.exports = () => {
-	return { removeCharacterSpecial }
+	return { convertUTF8 }
 }

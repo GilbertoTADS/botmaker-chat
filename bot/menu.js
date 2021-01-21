@@ -1,20 +1,25 @@
 
+module.exports = ( app ) => {
+    console.log(app.database.connection)
+    const answer = app.talk.intent.myPurchases.introduction
 
+    const inited = ( contactId,message ) => {
+        const intents = {
+            "mypurchases" : ( ) => {
+                runIntent = 'mypurchases'
+                app.myCache.set( contactId , contactId+runIntent , app.myCache.options.stdTTL )
+                app.myCache.set( contactId+'action' , contactId , app.myCache.options.stdTTL )
+                app.actions.messages.sendMessage(contactId, answer)
+            }
+        } 
+        
+        let action = intents[message]
+    
+        if(typeof action === 'function') return action()
 
-module.exports = ( contactId,message, myCache, talk, funcMessage ) => {
-    //DESIGN PATTERS: OBJECT LITERALS
+    }
 
-    const intents = {
-        "mypurchases" : ( ) => {
-            runIntent = 'mypurchases'
-            myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
-            myCache.set( contactId+'action' , contactId , myCache.options.stdTTL )
-            funcMessage.sendMessage(contactId, talk.intent.myPurchases.introduction)
-        }
-    } 
-
-    let action = intents[message]
-
-    if(typeof action === 'function') action()
-    //END DESIGN PATTERS: OBJECT LITERALS
+    
+    
+    return inited
 }

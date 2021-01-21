@@ -1,6 +1,6 @@
 var ibmdb = require('ibm_db');
 
-var connStr = "DATABASE=name-database;HOSTNAME=999.999.999.999;PORT=00000;PROTOCOL=TCPIP;UID=user-database;PWD=passwd-database";
+var connStr = "DATABASE=cisserp;HOSTNAME=192.168.1.135;PORT=50000;PROTOCOL=TCPIP;UID=dba;PWD=overhead";
 
 
 

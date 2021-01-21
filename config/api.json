@@ -1,11 +1,12 @@
 {
-    "key":{
-        "user":"YOUR USER",
-        "id":"YOUR ID",
-        "access-token":"YOUR TOKEN",
-        "refresh-token":"YOUR TOKEN",
-        "platforms":"whatsapp",
-        "chatChannelNumber":"YOUR NUMBER"
-    }
-    
+    "key":[
+        {"user":"ConstruMaia"},
+        {"id":"NEU4VH260L07IDGQUMH6C3EQVE3NKJ"},
+        {"access-token":"eyJhbGciOiJIUzUxMiJ9.eyJidXNpbmVzc0lkIjoiQ29uc3RydU1haWEiLCJuYW1lIjoiR2lsYmVydG8gQ2FybG9zIiwiYXBpIjp0cnVlLCJpZCI6ImF2VXN3UllZNDVSZGp4MnRlSGc3YWZ6UzZCNDMiLCJleHAiOjE3Njg0MTgzMjcsImp0aSI6ImF2VXN3UllZNDVSZGp4MnRlSGc3YWZ6UzZCNDMifQ.sCDMZ9y-Bj84x2CnwvB3_PdXBBSh2nGjp2JkIrw9R4vu2WLymORC_VuGCLe-d7b1Qj5NFkTD75LaSxjUL7jzcg"},
+        {"refresh-token":"eyJhbGciOiJIUzUxMiJ9.eyJidXNpbmVzc0lkIjoiQ29uc3RydU1haWEiLCJuYW1lIjoiR2lsYmVydG8gQ2FybG9zIiwiYXBpIjp0cnVlLCJpZCI6ImF2VXN3UllZNDVSZGp4MnRlSGc3YWZ6UzZCNDMiLCJleHAiOjE3Njg0MTgzMjcsImp0aSI6ImF2VXN3UllZNDVSZGp4MnRlSGc3YWZ6UzZCNDMifQ.sCDMZ9y-Bj84x2CnwvB3_PdXBBSh2nGjp2JkIrw9R4vu2WLymORC_VuGCLe-d7b1Qj5NFkTD75LaSxjUL7jzcg"},
+        {"platforms":"whatsapp"},
+        {"chatChannelNumber":"553832151566"}
+    ]
 }
+    
+
