@@ -3,11 +3,8 @@
 module.exports = (app) => {
 
     const { formatDateBRL } = require('../shared/date')()
-    const { stringToNumberCurrencyBRLSum } = require('../shared/number')()
-    const { convertUTF8 } = require('../shared/text')()
-    const { decode,encode } = require ('html-entities')
-    const unidecode = require('unidecode')
-
+    const { formatReal, SumReal } = require('../shared/number')()
+    
     const sendMessage = app.actions.messages.sendMessage
     const db = app.database.connection
     const updateContact = app.database.query.updateContact
@@ -43,15 +40,15 @@ module.exports = (app) => {
                 .replace('addressUser', `${ data[0].ENDERECO}, ${data[0].NUMERO} - ${data[0].DESCRCIDADE }` )
                 .replace('dateOfBirth',`${ data[0].DATANASCIMENTO }`)
             sendMessage(contactId, messageFormated )
-
+            return data[0]
         }else{
             myCache.del(contactId)
             myCache.del(contactId+'action')
             myCache.del(contactId+'data-cpf')
-
-            sendMessage(contactId, answerCPF)
+            const res = await sendMessage(contactId, answerCPF)
+            res.answer = answerCPF
+            return res
         }
-        return runIntent
 
     }
 
@@ -66,7 +63,7 @@ module.exports = (app) => {
                 .then( client => {
                     updateContact(db,client, contactId)
                 })
-                .catch( error => console.log(error))
+                .catch( error =>  error )
 
 
             let data = await getTenPurchasesThisClient(db, cnpjcpf)
@@ -75,9 +72,7 @@ module.exports = (app) => {
             let TOTAL_SOMATORIA = 0
             
             for(let j = 0; j<=data.length-1; j++){
-
-                TOTAL_SOMATORIA = stringToNumberCurrencyBRLSum(data[j].TOTAL)
-
+                TOTAL_SOMATORIA = SumReal(data[j].TOTAL)
             }
 
             let messageFormated = answerSuccessIdentified
@@ -85,20 +80,27 @@ module.exports = (app) => {
                 .replace('requestNumber', data[0].IDORCAMENTO )
                 .replace('dataRequest', DTMOVIMENTO )
                 .replace('totalValue', TOTAL_SOMATORIA )
-
-
             runIntent = 'mypurchases-successIdentified'
 
             myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
-
-            sendMessage(contactId, messageFormated)
-        }else{
-            myCache.del(contactId+'action')
-            myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
-            sendMessage(contactId, app.talk.intent.myPurchases.errorIdenfied )
+            const res = await sendMessage(contactId, messageFormated)
+            res.answer = app.talk.intent.myPurchases.successIdentified
+            return res
         }
+        if(message == 'b' || message == 'nao'){
+            myCache.del(contactId+'action')
+            myCache.del(contactId+'data-cpf')
+            myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
+            const res = await sendMessage(contactId, app.talk.intent.myPurchases.errorIdenfied )
+            res.answer = app.talk.intent.myPurchases.errorIdenfied
+            return res
+        }
+        if(message != 'a' && message != 'b' && message != 'sim' && message != 'nao'){
+            const res = await sendMessage(contactId, app.talk.intent.myPurchases.messageInvalidToCPF )
+            res.answer = app.talk.intent.myPurchases.messageInvalidToCPF
+            return res
 
-
+        }
     }
 
 const purchaseDetails = async (message,contactId) => {
@@ -111,7 +113,8 @@ const purchaseDetails = async (message,contactId) => {
 
         let cnpjcpf = myCache.get( contactId+'data-cpf')
         let data = await getTenPurchasesThisClient(db, cnpjcpf)
-
+        
+        let res;
         for(let x = 0; x <= data.length-1 ; x++){
 
             let messageFormated2 = ''
@@ -124,14 +127,19 @@ const purchaseDetails = async (message,contactId) => {
                 }
                
                 messageFormated2 = answerPurchaseDetails
-                    .replace('description',unidecode(data[x].DESCRICAOPRODUTO))
-                    .replace('value',data[x].VALTOTLIQUIDO)
+                    .replace('description', data[x].DESCRICAOPRODUTO)
+                    .replace('value',formatReal(data[x].VALTOTLIQUIDO))
+                    .replace('qttForProduct',data[x].QTDPRODUTO )
                     .replace('DatePurchase', data[x].DTMOVIMENTO )
             }
-            sendMessage(contactId, messageFormated2)
+            res = await sendMessage(contactId, messageFormated2)
         }
-    }else{
+        res.answer = app.talk.intent.myPurchases.purchaseDetails
+        return res
+    }
+    if(message == 'b' || message == 'nao'){
         myCache.del(contactId+'action')
+        myCache.del(contactId+'data-cpf')
         myCache.set(contactId , contactId+runIntent , myCache.options.stdTTL)
         sendMessage(contactId, answerFinishIntent)
     }

@@ -1,5 +1,4 @@
 
-
 module.exports = (app)=>{
 
     const getClientByCPF = async (conn,cpfcnpj) => {
@@ -18,31 +17,28 @@ module.exports = (app)=>{
                         FROM 
                             CLIENTE_FORNECEDOR AS cf FULL JOIN CIDADES_IBGE AS ci
                                 ON ( cf.IDCIDADE = ci.IDCIDADE ) FULL JOIN CLIENTE_AUTORIZADOS AS ca
-                                ON( ca.IDCLIFOR = '${cpfcnpj}' )
-                               
+                                ON( ca.IDCLIFOR = '${cpfcnpj}' )       
                         WHERE
                             cf.CNPJCPF = '${cpfcnpj}'      
-                            LIMIT 1`
+                            LIMIT '1'`
     
-    
-    
-        const data = await conn.then(async(db) => {return await db.query(strQuery)})
+        const data = await conn.then(async(db) => { return await db.query(strQuery)})
+        
         return data
     
     }
     
-    
-    
+
     const getTenPurchasesThisClient = async (conn,cpfcnpj) => {
     
-        const strQuery = `SELECT
+        let strQuery = `SELECT
                             LOWER(o.NOME) AS NOME, 
                             o.IDORCAMENTO ,
                             Date(o.DTMOVIMENTO) AS  DTMOVIMENTO,
                             op.VALTOTLIQUIDO ,
-                            sum(op.VALTOTLIQUIDO ) AS TOTAL,
+                            SUM(op.VALTOTLIQUIDO*op.QTDPRODUTO ) AS TOTAL,
                             op.QTDPRODUTO,
-                            LOWER(pv.DESCRICAOPRODUTO) AS DESCRICAOPRODUTO 
+                            LOWER(pv.DESCRICAOPRODUTO) AS DESCRICAOPRODUTO
                         FROM 
                             ORCAMENTO AS o FULL JOIN ORCAMENTO_PROD AS op 
                                 ON(o.IDORCAMENTO = op.IDORCAMENTO ) FULL JOIN PRODUTOS_VIEW AS pv
@@ -57,11 +53,7 @@ module.exports = (app)=>{
                             op.QTDPRODUTO ,
                             pv.DESCRICAOPRODUTO
                         LIMIT '10'`
-    
-        
-        let data = await conn.then(async(db) => {return await db.query(strQuery)})
-        return data
-    
+    return conn.then( async( db ) => { return await db.query(strQuery)} )
     }
     const updateContact = (conn, client, contactId) => {
          for(idx in client[0]){
@@ -76,13 +68,13 @@ module.exports = (app)=>{
     
                 switch(client[0][idx]){
                     case null:
-                        return conn.then( async( db ) => { return await db.query(strUpdate) } )
+                        conn.then( async( db ) => { return await db.query(strUpdate) } )
+                    break;
                 }
             }
          }
     
     }
-
     return { getClientByCPF, getTenPurchasesThisClient, updateContact }
 
 }

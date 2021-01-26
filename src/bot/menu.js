@@ -14,11 +14,11 @@ module.exports = ( app ) => {
         } 
         
         let action = intents[message]
-        if(typeof action === 'function') action()
+        if(typeof action === 'function') return action()
 
     }
 
     
     
-    return {inited}
+    return inited 
 }
