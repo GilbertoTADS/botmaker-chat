@@ -16,3 +16,9 @@ no arquivo config/api.json altere os dados para o seu usuário cadastrado na bot
 documentação botmaker: https://botmaker.gitbook.io/botmaker/
 
 Obs: Este é apenas a primeira versão para servir de exemplo.
+
+TESTES:
+após ter certeza de que o banco de dados está configurado corretamente faça:
+
+ - npm run secure-mode
+
