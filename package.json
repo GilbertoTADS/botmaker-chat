@@ -4,23 +4,29 @@
   "description": "chatbot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index",
+    "test": "jest",
+    "secure-mode": "jest --watch --verbose=true"
   },
   "author": "gilberto",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "bootstrap": "^5.0.0-beta1",
     "consign": "^0.1.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "ibm_db": "^2.7.1",
+    "ibm_db": "^2.7.2",
+    "jest": "^26.6.3",
     "node-cache": "^5.1.2",
     "request": "^2.88.2",
-    "request-promise": "^4.2.6",
-    "utf8": "^3.0.0"
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "async": "^3.2.0",
+    "bluebird": "^3.7.2",
+    "charset-detector": "0.0.2",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.1"
   }
 }
