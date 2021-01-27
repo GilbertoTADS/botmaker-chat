@@ -1,19 +1,10 @@
-//const utf8 = require('utf8')
-const { Buffer } = require('buffer');
-const { StringDecoder } = require('string_decoder');
-const decoder = new StringDecoder('utf8');
+module.exports = (app) =>{
+    const OnlyCharacterLower = (str) => {
 
-
-const convertUTF8 = (value) =>{
-	value = value.toString()
-	const str = Buffer.from(value)
-		y
-	console.log(decoder.end(str))
-	return str
-	
+        str = str ? str.replace(/ /g,'').toLowerCase() : undefined
+        str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+        return str
+    }
+    return { OnlyCharacterLower }
 }
-
-
-module.exports = () => {
-	return { convertUTF8 }
-}
+    

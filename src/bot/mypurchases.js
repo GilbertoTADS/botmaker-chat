@@ -39,7 +39,8 @@ module.exports = (app) => {
                 .replace('nameUser', data[0].NOME )
                 .replace('addressUser', `${ data[0].ENDERECO}, ${data[0].NUMERO} - ${data[0].DESCRCIDADE }` )
                 .replace('dateOfBirth',`${ data[0].DATANASCIMENTO }`)
-            sendMessage(contactId, messageFormated )
+            data[0].response = await sendMessage(contactId, messageFormated )
+            
             return data[0]
         }else{
             myCache.del(contactId)
@@ -89,8 +90,8 @@ module.exports = (app) => {
         }
         if(message == 'b' || message == 'nao'){
             myCache.del(contactId+'action')
-            myCache.del(contactId+'data-cpf')
-            myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
+            //myCache.del(contactId+'data-cpf')
+            //myCache.set( contactId , contactId+runIntent , myCache.options.stdTTL )
             const res = await sendMessage(contactId, app.talk.intent.myPurchases.errorIdenfied )
             res.answer = app.talk.intent.myPurchases.errorIdenfied
             return res

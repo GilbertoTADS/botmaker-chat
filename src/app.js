@@ -18,14 +18,13 @@ module.exports = () => {
     app.db = db
 
     consign({cwd:'src', verbose:false})
-        .include('./database')
-        .then('./config/talk.json')
+        .then('./database')
+        .then('./config')
         .then('./shared')
-        .then('./config/api.json')
         .then('./actions')
         .then('./bot')
         .into(app)
-        
+       
     return { app }
 
 }

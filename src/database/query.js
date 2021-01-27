@@ -44,7 +44,7 @@ module.exports = (app)=>{
                                 ON(o.IDORCAMENTO = op.IDORCAMENTO ) FULL JOIN PRODUTOS_VIEW AS pv
                                 ON(op.IDPRODUTO = pv.IDPRODUTO )
                         WHERE 
-                            o.cnpjcpf = '${cpfcnpj}'
+                            o.cnpjcpf = '${cpfcnpj}'  
                             GROUP BY
                             o.NOME, 
                             o.IDORCAMENTO ,
